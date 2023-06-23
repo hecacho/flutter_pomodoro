@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const APP());
+  runApp(const MyApp());
 }
 
-class APP extends StatelessWidget {
-  const APP({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   void clickPlayBtn() {}
 
