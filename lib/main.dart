@@ -12,54 +12,64 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: const Color.fromARGB(255, 255, 0, 0) ,
-        textTheme: const TextTheme(
-          displayLarge: TextStyle(
-            fontSize: 35,
-            color: Color(0xFF232B55),
-          ),
-          displayMedium: TextStyle(
-            fontSize: 25,
-            color: Color.fromARGB(255, 61, 73, 138),
-          ),
-        ),
-        cardColor: const Color(0xFFF4EDDB),
-      ),
       home: Scaffold(
-        
-        body: Center(
-          child: Column(
-            children: [
-              Flexible(
-                flex: 1,
-                child: Center(
-                  child: Container(
-                    
+        backgroundColor: const Color(0xFFE7626C),
+        body: Column(
+          children: [
+            const Flexible(
+              flex: 1,
+              child: Center(
+                child: Text(
+                  "24:00",
+                  style: TextStyle(
+                    color: Color(0xFFFFFFFF),
+                    fontSize: 65,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ),
-              Flexible(
-                flex: 4,
-                child: Center(
-                  child: IconButton(
-                    onPressed: clickPlayBtn,
-                    icon: const Icon(Icons.play_circle),
+            ),
+            Flexible(
+              flex: 2,
+              child: Center(
+                child: IconButton(
+                  constraints: const BoxConstraints(
+                    minHeight: 120,
+                    minWidth: 120, 
+                  ),
+                  onPressed: clickPlayBtn,
+                  icon: const Icon(
+                    Icons.play_arrow,
+                    size: 90,
+                    color: Color(0xFFFFFFFF),
                   ),
                 ),
               ),
-              const Flexible(
-                flex: 1,
-                child: Center(
+            ),
+            Flexible(
+              flex: 1,
+              child: Container(
+                color: const Color(0xFFFFFFFF),
+                child: const Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("as"),
+                      Text(
+                        "pomodoro",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        "0",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w600),
+                      ),
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
