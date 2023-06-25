@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
               flex: 1,
               child: Center(
                 child: Text(
-                  "24:00",
+                  "25:00",
                   style: TextStyle(
                     color: Color(0xFFFFFFFF),
                     fontSize: 65,
@@ -30,12 +30,12 @@ class MyApp extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 2,
+              flex: 3,
               child: Center(
                 child: IconButton(
                   constraints: const BoxConstraints(
                     minHeight: 120,
-                    minWidth: 120, 
+                    minWidth: 120,
                   ),
                   onPressed: clickPlayBtn,
                   icon: const Icon(
@@ -49,20 +49,29 @@ class MyApp extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Container(
-                color: const Color(0xFFFFFFFF),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFFFFFF),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                ),
                 child: const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "pomodoro",
+                        "Today's Pomodoro",
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.w600),
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
                       Text(
                         "0",
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.w600),
+                            fontSize: 35, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
