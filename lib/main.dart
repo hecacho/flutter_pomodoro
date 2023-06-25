@@ -14,8 +14,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   //MyApp - property
+  int pomodoroCount = 0;
   bool isPlay = false;
-  int timeLeft = 1500;
+  int timeLeft = 10;
   late Timer timer;
 
   //MyApp - method
@@ -25,9 +26,19 @@ class _MyAppState extends State<MyApp> {
       isPlay = true;
     });
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        timeLeft--;
-      });
+      if (timeLeft > 1) {
+        setState(() {
+          timeLeft--;
+        });
+      }
+      else{
+        setState(() {
+        pomodoroCount++;
+        isPlay = false;
+        timeLeft = 10;
+        timer.cancel();
+        });
+      }
     });
   }
 
@@ -42,8 +53,19 @@ class _MyAppState extends State<MyApp> {
   //reset your timer time
   void clickResetTimer() {
     setState(() {
+      //reset MyApp's property except 'pomodoroCount'
+      timeLeft = 10;
+      isPlay = false;
+      timer.cancel();
+    });
+  }
+
+  //reset your pomodoro count
+  void clickResetPomodoro() {
+    setState(() {
       //reset MyApp's property
-      timeLeft = 1500;
+      pomodoroCount = 0;
+      timeLeft = 10;
       isPlay = false;
       timer.cancel();
     });
@@ -124,25 +146,37 @@ class _MyAppState extends State<MyApp> {
                     topRight: Radius.circular(40),
                   ),
                 ),
-                child: const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Today's Pomodoro",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(child: Container()),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Today's Pomodoro",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            pomodoroCount.toString(),
+                            style: const TextStyle(
+                                fontSize: 35, fontWeight: FontWeight.w600),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 15,
+                    ),
+                    Expanded(
+                      child: IconButton(
+                        onPressed: clickResetPomodoro,
+                        icon: const Icon(Icons.restart_alt),
                       ),
-                      Text(
-                        "0",
-                        style: TextStyle(
-                            fontSize: 35, fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             )
@@ -152,3 +186,10 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
+/*
+To Do
+  - pomodoro time -> 변수 하나로 통합
+  - pomodoro 1회 성공시 배경화면 초록색으로 전환, 휴식시간으로 전환
+*/
