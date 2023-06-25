@@ -1,13 +1,53 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  void clickPlayBtn() {}
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  //MyApp - property
+  bool isPlay = false;
+  int timeLeft = 1500;
+  late Timer timer;
+
+  //MyApp - method
+  //When click timer 'Play'
+  void clickPlayBtn() {
+    setState(() {
+      isPlay = true;
+    });
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        timeLeft--;
+      });
+    });
+  }
+
+  //When click timer 'Pause'
+  void clickPauseBtn() {
+    setState(() {
+      isPlay = false;
+    });
+    timer.cancel();
+  }
+
+  //reset your timer time
+  void clickResetTimer() {
+    setState(() {
+      //reset MyApp's property
+      timeLeft = 1500;
+      isPlay = false;
+      timer.cancel();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +56,12 @@ class MyApp extends StatelessWidget {
         backgroundColor: const Color(0xFFE7626C),
         body: Column(
           children: [
-            const Flexible(
+            Flexible(
               flex: 1,
               child: Center(
                 child: Text(
-                  "25:00",
-                  style: TextStyle(
+                  timeLeft.toString(),
+                  style: const TextStyle(
                     color: Color(0xFFFFFFFF),
                     fontSize: 65,
                     fontWeight: FontWeight.w800,
@@ -37,13 +77,41 @@ class MyApp extends StatelessWidget {
                     minHeight: 120,
                     minWidth: 120,
                   ),
-                  onPressed: clickPlayBtn,
-                  icon: const Icon(
-                    Icons.play_arrow,
-                    size: 90,
-                    color: Color(0xFFFFFFFF),
-                  ),
+                  onPressed: isPlay ? clickPauseBtn : clickPlayBtn,
+                  icon: isPlay
+                      ? const Icon(
+                          Icons.pause_circle,
+                          size: 90,
+                          color: Color(0xFFFFFFFF),
+                        )
+                      : const Icon(
+                          Icons.play_circle,
+                          size: 90,
+                          color: Color(0xFFFFFFFF),
+                        ),
                 ),
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Reset Timer :",
+                    style: TextStyle(
+                      color: Color(0xFFFFFFFF),
+                      fontSize: 16,
+                    ),
+                  ),
+                  Center(
+                    child: IconButton(
+                      color: const Color(0xFFFFFFFF),
+                      icon: const Icon(Icons.restore),
+                      onPressed: clickResetTimer,
+                    ),
+                  ),
+                ],
               ),
             ),
             Flexible(
